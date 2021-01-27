@@ -28,8 +28,18 @@ def insert_sort(unsorted_data: list) -> list:
     '''Сортировка методом вставки
     :param unsorted_data Несортированные данные
     :return Сортированные данные'''
+
+
 def selection_sort(unsorted_data: list) -> list:
     '''Сортировка методом выбора
     :param unsorted_data Несортированные данные
     :return Сортированные данные
     '''
+
+    _validate(unsorted_data)
+    data = unsorted_data[:]
+    for i in range(len(data) -1):
+        for j in range(i + 1, len(data)):
+            if data[i] > data[j]:
+                data[i], data[j] = data[j], data[i]
+    return data
