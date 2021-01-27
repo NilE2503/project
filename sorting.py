@@ -24,10 +24,24 @@ def bubble_sort(unsorted_data: list) -> list:
 
     return data
 
+
 def insert_sort(unsorted_data: list) -> list:
     '''Сортировка методом вставки
     :param unsorted_data Несортированные данные
     :return Сортированные данные'''
+
+    _validate(unsorted_data)
+    data = unsorted_data[:]
+    for i in range(1, len(data)):
+        current = data[i]
+        j = i -1
+        while data[i] < data[j] and j >= 0:
+            data[i], data[j] =  data[j], data[i]
+            j = i -1
+        j = j + 1
+        data[j] = current
+
+    return data
 
 
 def selection_sort(unsorted_data: list) -> list:
