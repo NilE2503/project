@@ -3,11 +3,12 @@
 Точка старта.
 """
 import loader
+import sorting
 import click
 
-BUBBLE ='bubble'
-INSERT = 'insert'
-SELECTION = 'SELECTION'
+BUBBLE = 'b'
+INSERT = 'i'
+SELECTION = 'S'
 
 '''
 source, filename = parse_cmd()
@@ -16,23 +17,38 @@ if source == KEYBOARD:
 else:
     unsorted_data = load_from_file(filename)
 '''
+
+
 @click.command()
 @click.option('--filename', default=None,
-               help='Имя файла с сортированными данными.')
+                help='Имя файла с сортированными данными.')
 @click.option('--algorithm', default=BUBBLE,
-               help = 'Алгоритм сортировки.')
+                help='Алгоритм сортировки.')
 def sorter(filename, algorithm):
-    '''Простая утилита для сортировки чисел.
+    ''' Простая утилита для сортировки чисел
     '''
+    allowed_algorithms = [BUBBLE, INSERT, SELECTION]
+    if algorithm not in allowed_algorithms:
+        print('Неправельно введено имя алгоритма.')
+        print('Правельные варианты: ', allowed_algorithms)
+        exit(1)
+
     print(filename, algorithm)
     if filename is None:
         unsorted_data = loader.load_from_input()
     else:
         unsorted_data = loader.load_from_file(filename)
 
-    allowed_algotithms = [BUBBLE, INSERT, SELECTION]
-    if algorithm not in [BUBBLE, INSERT, SELECTION]:
-        print('Неправельно введено имя алгоритма.')
-        exit(1)
+    if algorithm == BUBBLE:
+        result = sorting.bubble_sort(unsorted_data)
+    elif algorithm == INSERT:
+        result = sorting.insert_sort(unsorted_data)
+    elif algorithm == SELECTION:
+        result = sorting.selection_sort(unsorted_data)
+
+    print('Несортированный массив: ', *unsorted_data)
+    print('Сортированный массив: ', *result)
+
+
 if __name__ == '__main__':
     sorter()
